@@ -1,4 +1,4 @@
-package com.kafka.demo;
+package com.kafka.entity;
 
 /**
  * FileName: KafkaProperties

@@ -1,5 +1,7 @@
-package com.kafka.demo;
+package com.kafka.consumer;
 
+import com.kafka.entity.KafkaProperties;
+import com.kafka.entity.Message;
 import kafka.consumer.Consumer;
 import kafka.consumer.ConsumerConfig;
 import kafka.consumer.ConsumerIterator;
@@ -23,10 +25,12 @@ public class KafkaConsumer extends Thread {
 
     private final ConsumerConnector consumer; // consumer连接
     private final String topic;
+    private String name;
 
-    public KafkaConsumer(String topic) {
+    public KafkaConsumer(String topic, String name) {
         consumer = Consumer.createJavaConsumerConnector(createConsumerConfig());
         this.topic = topic;
+        this.name = name;
     }
 
     private static ConsumerConfig createConsumerConfig() {
@@ -47,7 +51,8 @@ public class KafkaConsumer extends Thread {
         KafkaStream<byte[], byte[]> stream = consumerMap.get(topic).get(0);
         ConsumerIterator<byte[], byte[]> it = stream.iterator(); // 获取迭代对象
         while (it.hasNext()) {
-            System.out.println("receive：" + new String(it.next().message()));
+            // System.out.println("name: " + name + "receive：" + new String(it.next().message()));
+            System.out.println(it.next().message().toString());
             try {
                 sleep(1000);
             } catch (InterruptedException e) {
